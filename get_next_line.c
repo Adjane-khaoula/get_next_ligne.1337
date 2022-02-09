@@ -6,7 +6,7 @@
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:43:40 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/07 23:47:34 by kadjane          ###   ########.fr       */
+/*   Updated: 2022/02/09 19:10:35 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ size_t	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
-		i++;
+	if (str == NULL)
+		return (0);
+	else
+	{
+		while (str[i])
+			i++;
+	}
 	return (i);
 }
 
@@ -45,17 +50,13 @@ char	*ft_strdup(char *src)
 	return (p2);
 }
 
-
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s; 
 	char	*ps;
 
-	if (!s1)
+	if (s1 == NULL)
 		return (ft_strdup((char *)s2));
-	if (!s2)
-		return (ft_strdup((char *)s1));
 	s = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!s)
 		return (0);
@@ -68,44 +69,85 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ps);
 }
 
+int		ft_search(char *ligne)
+{
+	int position;
+
+	position = 0;
+	if (!ligne)
+		return (0);
+	while (*ligne++)
+	{
+		position++;
+		if (*ligne == '\n')
+		return (poition);
+	}
+	return (0);
+}
+
+char	ft_ligne(char *buff, int position)
+{
+	char	*ligne;
+	int		i;
+
+	i = 0;
+	while (i++ <= position)
+		*ligne++ = *buff++;
+	return (ligne);
+}
+
+char	ft_save(char *str)
+{
+	char 	*save;
+	while (*str)
+		*save++ = *str++;
+	*save = '\0';
+	return (save); 
+}
+
 char *get_next_line(int fd)
 {
 	char		*buff;
 	char		*ligne;
-	static char	*save;
-	int			nbit;
+	static char	*save = NULL;
+	int			n;
+	int			searchinsave;
+	int			searchinbuff;
 
-	save = ft_strdup("");
-	
+	searchinsave = ft_search(save);
+	if (searchinsave != 0)
+	{
+		ligne = ft_ligne(save, searchinsave);
+		save = ft_save(save + searchinsave + 1);
+		retun (ligne);
+	}
 	while (1)
 	{
-		nbit = read (fd, buff, BUFFER_SIZE);
+		buff = malloc(ft_strlen (save) + BUFFER_SIZE + 1);
+		n = read (fd, buff, BUFFER_SIZE);
+		*(buff + (ft_strlen (save) + BUFFER_SIZE + 1)) = '\0';
 		buff = ft_strjoin(save,buff);
-		ligne = malloc (ft_strlen(save) + ft_strlen(buff) + 1);
-		while (*buff++ && *buff++ != '\n' )
-			*ligne = *buff;
-		if (nbit == 0 || nbit == -1 || *buff == '\n')
+		searchinbuff = ft_search(buff);
+		if (searchinbuff != 0) 
+		{
+			ligne = ft_ligne(buff, searchinbuff);
+			save = ft_save(buff + searchinbuff + 1);
+		}
+		if (n == 0 || n == -1 || searchinbuff != 0)
 			break ;
-	} 
-	*ligne = '\0';
-	while (*buff == '\n')
-		buff++;
-	save = malloc(ft_strlen(buff) + 1);
-	while (*buff)
-		*save++ = *buff++;
-	*save = '\0';	
-	return (ligne);
-} 
+	}
+}
 
 int main(int ac , char **av)
 {
 	int fd;
-	char *get;
-	
-	fd = open("test.txt", O_CREAT |  O_RDWR, 0777);
-	write (fd, "khawlaadjane",12);
-	close (fd);
-	fd = open("test.txt", O_RDONLY); 
-	get = get_next_line(fd);
-	printf("%s",get);
+	// char *get;
+
+	// fd = open("test.txt", O_CREAT |  O_RDWR, 0777);
+	// write (fd, "khawlaadjane",12);
+	// close (fd);
+	// fd = open("test.txt", O_RDONLY); 
+	// get = get_next_line(fd);
+	fd = ft_strlen("abs\nhs");
+	printf("%d",fd);
 }

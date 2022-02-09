@@ -39,3 +39,24 @@ int main(int ac, char **av)
 	// 		break ;
 	// }
 }
+
+{
+		j = 0;
+		buff = malloc(ft_strlen(save) + BUFFER_SIZE + 1);
+		n = read(fd, buff, BUFFER_SIZE);
+		buff[n] = 0;
+		buff = ft_strjoin(save,buff);
+		ligne = malloc (ft_strlen(save) + ft_strlen(buff) + 1);
+		while (buff[j] != '\0' && buff[j] != '\n')
+			ligne[i++] = buff[j++];
+		if (n == 0 || n == -1 || buff[j] == '\n')
+			break ;
+	} 
+	ligne[i + 1] = '\0';
+	while (*buff == '\n')
+		buff++;
+	save = malloc(ft_strlen(buff) + 1);
+	while (*buff)
+		*save++ = *buff++;
+	*save = '\0';
+	return (ligne);
