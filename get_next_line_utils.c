@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/20 11:11:05 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/06 13:01:23 by kadjane          ###   ########.fr       */
+/*   Created: 2022/02/14 12:01:59 by kadjane           #+#    #+#             */
+/*   Updated: 2022/02/14 14:25:17 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
-		i++;
+	if (str == NULL)
+		return (0);
+	else
+	{
+		while (str[i])
+			i++;
+	}
 	return (i);
 }
 
@@ -52,10 +55,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*s; 
 	char	*ps;
 
-	// if (!s1)
-	// 	return (ft_strdup((char *)s2));
-	// if (!s2)
-	// 	return (ft_strdup((char *)s1));
+	if (!s1)
+		return (ft_strdup((char *)s2));
 	s = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!s)
 		return (0);
@@ -66,10 +67,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		*s++ = *s2++;
 	*s = '\0';
 	return (ps);
-}
-int main()
-{
-	char *s;
-	s = ft_strjoin("","adjane");
-	printf("%s\n",s);
 }
