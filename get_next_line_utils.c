@@ -6,7 +6,7 @@
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:01:59 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/14 14:25:17 by kadjane          ###   ########.fr       */
+/*   Updated: 2022/02/16 17:42:06 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*ft_strdup(char *src)
 	i = 0;
 	l = ft_strlen(src) + 1;
 	p = (char *)malloc(l);
+	if (!p)
+		return (NULL);
 	p2 = p;
-	if (p == 0)
-		return (0);
 	while (src[i])
 	{
 		*p = src[i];
@@ -50,21 +50,25 @@ char	*ft_strdup(char *src)
 	return (p2);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *save, char *buff)
 {
-	char	*s; 
-	char	*ps;
+	char	*stock; 
+	char	*pstock;
 
-	if (!s1)
-		return (ft_strdup((char *)s2));
-	s = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s)
-		return (0);
-	ps = s;
-	while (*s1)
-		*s++ = *s1++;
-	while (*s2)
-		*s++ = *s2++;
-	*s = '\0';
-	return (ps);
+	if (!(*save))
+	{
+		free(save);
+		return (ft_strdup(buff));
+	}
+	stock = malloc(ft_strlen(save) + ft_strlen(buff) + 1);
+	if (!stock)
+		return (NULL);
+	pstock = stock;
+	while (*save)
+		*stock++ = *save++;
+	while (*buff)
+		*stock++ = *buff++;
+	*stock = '\0';
+	free(save);
+	return (pstock);
 }

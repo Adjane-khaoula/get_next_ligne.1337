@@ -6,7 +6,7 @@
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:43:56 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/14 12:18:48 by kadjane          ###   ########.fr       */
+/*   Updated: 2022/02/16 16:50:42 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(char *src);
-char	*ft_strjoin(char const *s1, char const *s2);
-int	ft_search(char *ligne);
-char	*ft_ligne(char *buff, int position);
-char	*ft_save(char *str);
-char	*ft_get_line(char *ligne,char *save,int position);
-char *get_next_line(int fd);
+char	*ft_strjoin(char *save, char *buff);
+int		ft_search(char *ligne);
+char	*ft_ligne(char *buff, int position, int n);
+char	*ft_save(char *save, int n);
+char	*ft_get_line(char **ligne,char **save);
+char	*get_next_line(int fd);
 
 #endif
