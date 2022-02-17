@@ -6,7 +6,7 @@
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:01:59 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/16 17:42:06 by kadjane          ###   ########.fr       */
+/*   Updated: 2022/02/17 20:53:51 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,27 @@ char	*ft_strdup(char *src)
 	return (p2);
 }
 
-char	*ft_strjoin(char *save, char *buff)
+char	*ft_strjoin(char *ligne, char *buff)
 {
-	char	*stock; 
+	char	*stock;
 	char	*pstock;
+	char	*pligne;
 
-	if (!(*save))
+	if (!(*ligne))
 	{
-		free(save);
+		free(ligne);
 		return (ft_strdup(buff));
 	}
-	stock = malloc(ft_strlen(save) + ft_strlen(buff) + 1);
+	stock = malloc(ft_strlen(ligne) + ft_strlen(buff) + 1);
 	if (!stock)
 		return (NULL);
 	pstock = stock;
-	while (*save)
-		*stock++ = *save++;
+	pligne = ligne;
+	while (*ligne)
+		*stock++ = *ligne++;
 	while (*buff)
 		*stock++ = *buff++;
 	*stock = '\0';
-	free(save);
+	free(pligne);
 	return (pstock);
 }
