@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kadjane <kadjane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/04 21:43:40 by kadjane           #+#    #+#             */
-/*   Updated: 2022/02/19 15:51:12 by kadjane          ###   ########.fr       */
+/*   Created: 2022/02/18 14:43:41 by kadjane           #+#    #+#             */
+/*   Updated: 2022/02/19 17:10:25 by kadjane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_search(char *ligne)
 {
@@ -84,17 +84,17 @@ char	*get_next_line(int fd)
 {
 	char		*buff;
 	char		*ligne;
-	static char	*save;
+	static char	*save[OPEN_MAX];
 	int			n;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647
-		|| read (fd, NULL, 0))
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX
+		|| read (fd, NULL, 0) < 0)
 		return (NULL);
-	if (!save)
-		save = ft_strdup ("");
-	ligne = ft_strdup(save);
-	free(save);
-	save = NULL;
+	if (!save[fd])
+		save[fd] = ft_strdup ("");
+	ligne = ft_strdup(save[fd]);
+	free(save[fd]);
+	save[fd] = NULL;
 	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
@@ -106,21 +106,39 @@ char	*get_next_line(int fd)
 		ligne = ft_strjoin(ligne, buff);
 	}
 	free(buff);
-	return (ft_get_line(ligne, &save, n));
+	return (ft_get_line(ligne, &save[fd], n));
 }
-
 // int main(int ac , char **av)
 // {
-// 	int fd;
-// 	char *get = "hf\ngs"; 
+// 	int f1;
+// 	int f2;
+// 	// int f3;
+// 	char *get1;
+// 	char *get2;
+// 	// char *get3; 
 // 	// fd = open("test/64bit_line.txt", O_CREAT |  O_RDWR, 0777);
 // 	// write (fd, "anawr\nfe\n\n\n", 13);
 // 	// close (fd);
-// 	fd = open(, O_RDONLY); 
-// 	while (get != NULL)
+// 	f1 = open(av[1], O_RDONLY);
+// 	f2 = open(av[2], O_RDONLY); 
+// 	// f3 = open("3", O_RDONLY); 
+// 	while (1)
 // 	{
-// 		get = get_next_line(0);
-// 		printf("%s", get);
-// 		free(get);
+// 		get1 = get_next_line(f1);
+// 		get2 = get_next_line(f2);
+// 		// get3 = get_next_line(f3);
+// 		// get1 = get_next_line(f1);
+// 		// get2 = get_next_line(f2);
+// 		// get3 = get_next_line(f3);
+// 		// get1 = get_next_line(f1);
+// 		// get2 = get_next_line(f2);
+// 		// get3 = get_next_line(f3);
+// 		printf("{%s}\n", get1);
+// 		printf("%s",get2);
+// 		if (get1 == NULL && get2 == NULL)
+// 			break ;
+// 		// printf("%s", get2);
+// 		// printf("%s", get3);
+// 		free(get1);
 // 	}
 // }
